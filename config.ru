@@ -1,3 +1,3 @@
 # encoding: UTF-8
-require './hello-app'
+require './app'
 run Sinatra::Application
