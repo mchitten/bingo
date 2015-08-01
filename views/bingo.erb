@@ -1,0 +1,60 @@
+<style>
+  table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 100px auto;
+  }
+  td {
+    margin: 0;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+  }
+</style>
+
+<% @groups.each do |group| %>
+<table border="0" cell>
+<tr>
+  <td colspan="5" class="title"><%= h @title %></td>
+</tr>
+<tr>
+  <td><%= h group[0] %></td>
+  <td><%= h group[1] %></td>
+  <td><%= h group[2] %></td>
+  <td><%= h group[3] %></td>
+  <td><%= h group[4] %></td>
+</tr>
+<tr>
+  <td><%= h group[5] %></td>
+  <td><%= h group[6] %></td>
+  <td><%= h group[7] %></td>
+  <td><%= h group[8] %></td>
+  <td><%= h group[9] %></td>
+</tr>
+<tr>
+  <td><%= h group[10] %></td>
+  <td><%= h group[11] %></td>
+  <td><img src="/images/star.png" width="40" height="40" /></td>
+  <td><%= h group[12] %></td>
+  <td><%= h group[13] %></td>
+</tr>
+<tr>
+  <td><%= h group[14] %></td>
+  <td><%= h group[15] %></td>
+  <td><%= h group[16] %></td>
+  <td><%= h group[17] %></td>
+  <td><%= h group[18] %></td>
+</tr>
+<tr>
+  <td><%= h group[19] %></td>
+  <td><%= h group[20] %></td>
+  <td><%= h group[21] %></td>
+  <td><%= h group[22] %></td>
+  <td><%= h group[23] %></td>
+</tr>
+</table>
+<% end %>

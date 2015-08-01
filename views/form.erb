@@ -1,0 +1,39 @@
+<style>
+  body {
+    font-size: 13pt;
+    font-family: Helvetica;
+  }
+
+  form {
+    margin: 0 auto;
+    width: 500px;
+    background: #eeeeee;
+    border-radius: 10px;
+    padding: 50px;
+  }
+
+  input, textarea {
+    border: 1px solid #dedede;
+    padding: 10px;
+    width: 100%;
+  }
+
+  textarea {
+    height: 250px;
+  }
+</style>
+<form action="/show" method="post">
+<b>Bingo game title:</b>
+<div><small>For example: "Baby Bingo" for a baby shower</small></div>
+<p><input type="text" name="title" placeholder="Put the title of your bingo game here." /></p>
+
+<p><b>Bingo tile items</b></p>
+<div><small>One per line.  These will fill in the squares in your bingo game cards.  Each card will pick a random 24 from the list.</small></div>
+<p><textarea name="items" placeholder="Put your bingo items here, one per line."></textarea></p>
+
+<p><b>How many cards?</b></p>
+<div><small>How many cards should we make?</small></div>
+<p><input name="count" type="number" placeholder="Number of cards to make." /></p>
+
+<p><input type="submit" value="Create Bingo Game" /></p>
+</form>
