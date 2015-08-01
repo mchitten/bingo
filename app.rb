@@ -11,15 +11,38 @@ get '/' do
 end
 
 post '/show' do
+  @errors = {
+    title: [],
+    items: [],
+    count: []
+  }
+
   # The title of the bingo cards.
   @title = params[:title]
 
+  if @title.empty?
+    @errors ||= []
+    @errors[:title] << "Can't be blank"
+  end
+
   # Get all items.  They should have been newline separated.
-  items = params[:items].split(/\n+/)
+  items = params[:items].split(/\n+/).reject { |i| i.strip.empty? }
   unique_items = items.dup
+
+  if items.empty?
+    @errors[:items] << "Can't be blank"
+  end
+
+  if items.length < 24
+    @errors[:items] << "You must have at least 24 items."
+  end
 
   # Number of cards to make.
   count = params[:count].to_i
+
+  if count < 1
+    @errors[:count] << "Are you sure you don't want any cards?"
+  end
 
   # Will be populated by "groups" of items for cards.
   groups = []
