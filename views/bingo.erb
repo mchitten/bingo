@@ -14,6 +14,12 @@
     width: 100px;
     height: 100px;
   }
+
+  @media print {
+    table {
+      page-break-after: always;
+    }
+  }
 </style>
 
 <% @groups.each do |group| %>
