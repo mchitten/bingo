@@ -1,4 +1,12 @@
 require 'sinatra'
+require 'dotenv'
+
+Dotenv.load
+
+configure do
+  enable :sessions
+  set(:session_secret, ENV['SESSION_SECRET'])
+end
 
 helpers do
   def h(text)
@@ -7,6 +15,17 @@ helpers do
 end
 
 get '/' do
+  @errors = {}
+  @values = {}
+
+  if session[:errors]
+    @errors = session[:errors]
+    @values = session[:values]
+
+    session[:errors] = nil
+    session[:values] = nil
+  end
+
   erb :form
 end
 
@@ -17,24 +36,28 @@ post '/show' do
     count: []
   }
 
+  has_error = false
+
   # The title of the bingo cards.
-  @title = params[:title]
+  @title = params[:title].strip
 
   if @title.empty?
-    @errors ||= []
-    @errors[:title] << "Can't be blank"
+    @errors[:title] << "Title can't be blank"
+    has_error = true
   end
 
   # Get all items.  They should have been newline separated.
-  items = params[:items].split(/\n+/).reject { |i| i.strip.empty? }
+  items = params[:items].split(/\n+/).map(&:strip).reject { |i| i.strip.empty? }
   unique_items = items.dup
 
   if items.empty?
-    @errors[:items] << "Can't be blank"
+    @errors[:items] << "Items can't be blank"
+    has_error = true
   end
 
   if items.length < 24
     @errors[:items] << "You must have at least 24 items."
+    has_error = true
   end
 
   # Number of cards to make.
@@ -42,6 +65,17 @@ post '/show' do
 
   if count < 1
     @errors[:count] << "Are you sure you don't want any cards?"
+    has_error = true
+  end
+
+  if has_error
+    session[:errors] = @errors
+    session[:values] = {
+      title: @title,
+      items: items.join("\n"),
+      count: count
+    }
+    return redirect '/'
   end
 
   # Will be populated by "groups" of items for cards.

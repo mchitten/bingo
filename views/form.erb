@@ -9,7 +9,7 @@
     width: 500px;
     background: #eeeeee;
     border-radius: 10px;
-    padding: 50px;
+    padding: 30px 50px;
   }
 
   input, textarea {
@@ -21,19 +21,31 @@
   textarea {
     height: 250px;
   }
+
+  .error {
+    font-size: 11pt;
+    color: #a94442;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
 </style>
 <form action="/show" method="post">
-<b>Bingo game title:</b>
+<p><b>Give your Bingo game a title:</b></p>
 <div><small>For example: "Baby Bingo" for a baby shower</small></div>
-<p><input type="text" name="title" placeholder="Put the title of your bingo game here." /></p>
+<% if @errors[:title] %><div class="error"><%= @errors[:title].join(', ') %></div><% end %>
+<p><input type="text" name="title" placeholder="Put the title of your bingo game here." value="<%= h @values[:title] %>" /></p>
 
 <p><b>Bingo tile items</b></p>
-<div><small>One per line.  These will fill in the squares in your bingo game cards.  Each card will pick a random 24 from the list.</small></div>
-<p><textarea name="items" placeholder="Put your bingo items here, one per line."></textarea></p>
+<div><small>List all potential options on your bingo cards, one per line.  Each individual card will choose a random 24 from this list with 1 "free" space in the middle.  <b>Note:</b> you must have at least 24 items in this list.</small></div>
+<% if @errors[:items] %><div class="error"><%= @errors[:items].join(', ') %></div><% end %>
+<p><textarea name="items" placeholder="Put your bingo items here, one per line."><%= h @values[:items] %></textarea></p>
 
 <p><b>How many cards?</b></p>
-<div><small>How many cards should we make?</small></div>
-<p><input name="count" type="number" placeholder="Number of cards to make." /></p>
+<div><small>How many cards do you want? You'll be able to print on the next page.</small></div>
+<% if @errors[:count] %><div class="error"><%= @errors[:count].join(', ') %></div><% end %>
+<p><input name="count" type="number" placeholder="Number of cards to make." value="<%= h @values[:count] %>" /></p>
 
 <p><input type="submit" value="Create Bingo Game" /></p>
 </form>
